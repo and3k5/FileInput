@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Test FileInput</title>
+        <script src="../js/FileInput.js"></script>
+    </head>
+    <body>
+        <h1>FileInput</h1>
+        <div id="drop" style="width:100px;height:100px;background-color:grey">
+            Drop here
+        </div>
+        <input id="fileupload">
+        <pre>Result:</pre>
+        <script>
+            var fi = new FileInput({type: FileInput.BLOB});
+            fi.onload= function (data) {
+                document.querySelector("pre").textContent+=("\nFILE RECEIVED!");
+            };
+            fi.createDragDrop(document.querySelector("#drop"));
+            fi.createFileUpload(document.querySelector("#fileupload"));
+        </script>
+    </body>
+</html>
