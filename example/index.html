@@ -2,22 +2,24 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Test FileInput</title>
+        <title>FileInput demo</title>
+        <link rel="stylesheet" href="demo.css">
         <script src="../js/FileInput.js"></script>
     </head>
     <body>
-        <h1>FileInput</h1>
-        <div id="drop" style="width:100px;height:100px;background-color:grey">
-            Drop here
+        <h1>FileInput demo</h1>
+        <div id="drop">
+            Drop a file here
         </div>
         <input id="fileupload">
-        <pre>Result:</pre>
+        <h2>Result</h2>
+        <pre></pre>
         <script>
-            var fi = new FileInput({type: FileInput.BLOB});
+            var fi = new FileInput({type: FileInput.TYPE.FILE});
             fi.onload= function (data) {
-                document.querySelector("pre").textContent+=("\nFILE RECEIVED!");
+                document.querySelector("pre").textContent=("Filename:\t"+data.name+"\nLast Modified:\t"+data.lastModifiedDate+"\nFile type:\t"+data.type);
             };
-            fi.createDragDrop(document.querySelector("#drop"));
+            fi.createDragDrop(document.querySelector("#drop"),"drophover");
             fi.createFileUpload(document.querySelector("#fileupload"));
         </script>
     </body>
