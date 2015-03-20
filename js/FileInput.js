@@ -31,7 +31,7 @@ var FileInput = (function () {
         if ((options=arguments[0]) instanceof Object) {
             var value, key;
             for (key in options) {
-                switch (value=options[key]) {
+                switch ((value=options[key],key)) {
                     case "accept": this.accept = value;
                     break;
                     case "fileupload": this.createFileUpload(value);
