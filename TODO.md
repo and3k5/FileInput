@@ -1,5 +1,5 @@
 # TODO List
-* Documentation, Readme.md (images, http://shields.io/)
+* Documentation
 * Improve code (Options check, ....)
 * Testing (Jasmine)
 * Better examples
@@ -10,3 +10,4 @@
 * dist, js folders
 * https://github.com/and3k5/FileInput/wiki
 * http://bower.io/
+* Make release
