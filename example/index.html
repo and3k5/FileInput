@@ -7,13 +7,15 @@
         <script src="../js/FileInput.js"></script>
     </head>
     <body>
-        <h1>FileInput demo</h1>
-        <div id="drop">
-            Drop a file here
+        <div class="page">
+            <h1>FileInput demo</h1>
+            <div id="drop">
+                Drop a file here
+            </div>
+            <input id="fileupload">
+            <h2>Result</h2>
+            <pre></pre>
         </div>
-        <input id="fileupload">
-        <h2>Result</h2>
-        <pre></pre>
         <script>
             var fi = new FileInput({type: FileInput.TYPE.FILE});
             fi.onload= function (data) {
