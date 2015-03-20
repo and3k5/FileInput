@@ -8,7 +8,6 @@ options {
     onload: empty function | function () {....},
     onerror: empty function | function () {....},
     dragndrop_hoverclass: "" | "classname",
-    fileupload_hoverclass: "" | "classname",
     type: FileInput.ARRAYBUFFER | FileInput.DATAURL | FileInput.TEXT
 }
 */
@@ -45,8 +44,6 @@ var FileInput = (function () {
                     break;
                     case "dragndrop_hoverclass": this.dragndrop_hoverclass = value;
                     break;
-                    case "fileupload_hoverclass": this.fileupload_hoverclass = value;
-                    break;
                     case "type": this.type = value;
                     break;
                 }
@@ -61,7 +58,6 @@ var FileInput = (function () {
     }
     ;
     FileInput.prototype.accept = "";
-    FileInput.prototype.fileupload_hoverclass = "";
     FileInput.prototype.dragndrop_hoverclass = "";
     FileInput.prototype.type=FileInput.TYPE.ARRAYBUFFER;
     function readFile(file) {
@@ -98,19 +94,25 @@ var FileInput = (function () {
         ;
     }
     ;
-    FileInput.prototype.createDragDrop = function (element) {
+    FileInput.prototype.createDragDrop = function (element,hoverclass) {
+        if (hoverclass == undefined) {
+            hoverclass = "";
+        }
         var fileInputObj = this;
         element.draggable = false;
         element.ondragover = function (e) {
+            this.classList.add(hoverclass);
             e.preventDefault();
             return false;
         }
         ;
         element.ondragleave = element.ondragend = function (e) {
-            return false;
+            this.classList.remove(hoverclass);
+		    return false;
         }
         ;
         element.ondrop = function (e) {
+            this.classList.remove(hoverclass);
             e.preventDefault();
             var file = e.dataTransfer.files[0];
             readFile.call(fileInputObj, file);

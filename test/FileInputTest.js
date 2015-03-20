@@ -3,7 +3,6 @@ describe("FileInput", function() {
         var fileinput,
             accept = "image/jpeg",
             dragndrop_hoverclass = ".hover",
-            fileupload_hoverclass = ".hover2",
             type = FileInput.TYPE.TEXT,
 
             div = document.createElement("div"),
@@ -15,7 +14,6 @@ describe("FileInput", function() {
         var options = {
             accept: accept,
             dragndrop_hoverclass: dragndrop_hoverclass,
-            fileupload_hoverclass: fileupload_hoverclass,
             type: type,
 
             dragndrop: div,
@@ -33,14 +31,6 @@ describe("FileInput", function() {
 
         it("dragndrop_hoverclass", function() {
             expect(fileinput.dragndrop_hoverclass).toBe(dragndrop_hoverclass);
-        });
-
-        it("fileupload_hoverclass", function() {
-            expect(fileinput.fileupload_hoverclass).toBe(fileupload_hoverclass);
-        });
-
-        it("fileupload_hoverclass", function() {
-            expect(fileinput.type).toBe(type);
         });
 
         it("dragndrop", function() {
