@@ -16,6 +16,7 @@ options {
 var FileInput = (function () {
     function FileInput() {
         var _data;
+        var _file;
         Object.defineProperty(this, 'data', {
             get: function () {
                 return _data;
@@ -23,7 +24,7 @@ var FileInput = (function () {
             ,
             set: function (v) {
                 _data = v;
-                this.onload(_data);
+                this.onload(_data,_file);
             }
         }
         );
@@ -56,7 +57,7 @@ var FileInput = (function () {
         }
     }
     FileInput.TYPE = {
-        ARRAYBUFFER: 0, DATAURL: 1, TEXT: 2
+        ARRAYBUFFER: 0, DATAURL: 1, TEXT: 2, FILE:3
     }
     ;
     FileInput.prototype.accept = "";
@@ -77,6 +78,8 @@ var FileInput = (function () {
                 case FileInput.TYPE.DATAURL: reader.readAsDataURL(file);
                 break;
                 case FileInput.TYPE.TEXT: reader.readAsText(file);
+                break;
+                case FileInput.TYPE.FILE: fileInputObj.data = file;
                 break;
                 default: throw "Unknown type";
             }
