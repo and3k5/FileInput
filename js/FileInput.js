@@ -1,6 +1,11 @@
 "use strict";
 
 var FileInput = (function () {
+    function FileInputException(message) {
+        this.message = message;
+        this.name = "FileInputException";
+    }
+    
     function FileInput() {
         var _data;
         Object.defineProperty(this, 'data', {
@@ -73,7 +78,6 @@ var FileInput = (function () {
                     return true;
                 }
             }
-            
         }else{
             return true;
         }
@@ -97,10 +101,10 @@ var FileInput = (function () {
                     break;
                     case FileInput.TYPE.FILE: fileInputObj.data = file;
                     break;
-                    default: throw "Unknown type";
+                    default: throw new FileInputException("Unknown type: "+this.type);
                 }
             }else{
-                throw "File type didn't match the accept";
+                throw new FileInputException("Loaded file is not acceptable");
             }
         }
     }
@@ -108,11 +112,16 @@ var FileInput = (function () {
         var fileInputObj = this;
         element.type = "file";
         element.onchange = function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            var file = e.target.files[0];
-            readFile.call(fileInputObj, file);
-            return false;
+            try {
+                e.stopPropagation();
+                e.preventDefault();
+                var file = e.target.files[0];
+                readFile.call(fileInputObj, file);
+                return false;
+            }
+            catch (e) {
+                fileInputObj.onerror.call(fileInputObj,e);
+            }
         }
         ;
     }
@@ -135,11 +144,16 @@ var FileInput = (function () {
         }
         ;
         element.ondrop = function (e) {
-            this.classList.remove(hoverclass);
-            e.preventDefault();
-            var file = e.dataTransfer.files[0];
-            readFile.call(fileInputObj, file);
-            return false;
+            try {
+                this.classList.remove(hoverclass);
+                e.preventDefault();
+                var file = e.dataTransfer.files[0];
+                readFile.call(fileInputObj, file);
+                return false;
+            }
+            catch (e) {
+                fileInputObj.onerror.call(fileInputObj,e);
+            }
         }
         ;
     }
@@ -180,6 +194,7 @@ var FileInput = (function () {
     }*/
     
     FileInput.prototype.onload = function () {};
+    FileInput.prototype.onerror = function () {};
     FileInput.prototype.data = null;
     return FileInput;
 }
