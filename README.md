@@ -5,6 +5,7 @@ Slim, simple and time-saving wrapper for reading files with input[type="file"] a
 ## Why?
 So save time when i need user to submit a file somehow.
 ## How?
+You can [watch the demo](http://and3k5.github.io/FileInput/example/) or read the [reference table](REF.md)
 ### index.html
 ```html
 <script src="js/FileInput.js"></script>
@@ -15,7 +16,7 @@ So save time when i need user to submit a file somehow.
 ```
 ### file.js
 ```javascript
-var fi = new FileInput({type: FileInput.ARRAYBUFFER});
+var fi = new FileInput({type: FileInput.TYPE.ARRAYBUFFER});
 fi.onload= function (data) {
     // Do whatever you want with the data variable
 };
@@ -24,3 +25,5 @@ fi.createFileUpload(document.querySelector("input#file"));`
 ```
 ## Halp?
 Feel free to contribute by making pull requests, issues or whatever.
+
+Work is in progress (Watch my [TODO List](TODO.md))
