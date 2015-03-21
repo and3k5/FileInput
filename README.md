@@ -27,3 +27,5 @@ fi.createFileUpload(document.querySelector("input#file"));`
 Feel free to contribute by making pull requests, issues or whatever.
 
 Work is in progress (Watch my [TODO List](TODO.md))
+
+[Check out the unit test](http://and3k5.github.io/FileInput/test/FileInputTest.html)
