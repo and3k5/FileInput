@@ -1,21 +1,8 @@
 "use strict";
 
-/*
-options {
-    accept: "" | "image/*" | ".jpg",                // like the input[type="file"] attribute accept
-    fileupload: null | "#elementid" | elementobj,
-    dragndrop: null | "#elementid" | elementobj,
-    onload: empty function | function () {....},
-    onerror: empty function | function () {....},
-    dragndrop_hoverclass: "" | "classname",
-    type: FileInput.ARRAYBUFFER | FileInput.DATAURL | FileInput.TEXT
-}
-*/
-
 var FileInput = (function () {
     function FileInput() {
         var _data;
-        var _file;
         Object.defineProperty(this, 'data', {
             get: function () {
                 return _data;
@@ -23,7 +10,7 @@ var FileInput = (function () {
             ,
             set: function (v) {
                 _data = v;
-                this.onload(_data,_file);
+                this.onload(_data);
             }
         }
         );
@@ -49,17 +36,49 @@ var FileInput = (function () {
                 }
             }
         }
-        else {
-            console.log("NOT OBJ");
-        }
     }
     FileInput.TYPE = {
         ARRAYBUFFER: 0, DATAURL: 1, TEXT: 2, FILE:3
     }
     ;
+    
     FileInput.prototype.accept = "";
     FileInput.prototype.dragndrop_hoverclass = "";
     FileInput.prototype.type=FileInput.TYPE.ARRAYBUFFER;
+    
+    function accepted(accept,file) {
+        if (accept.trim()!="") {
+            var accept_mime = accept.split(",").filter(function (a) {
+                var acc = a.trim();
+                return !(acc[0]==".")
+            }).map(function (a) { 
+                var acc = a.trim();
+                return new RegExp(a.trim().replace('*',"\\S*"));
+            });
+            var accept_ext = accept.split(",").filter(function (a) {
+                var acc = a.trim();
+                return (acc[0]==".")
+            }).map(function (a) { 
+                var acc = a.trim();
+                return new RegExp(a.trim().replace('*',"\\S*"));
+            });
+            var i,len;
+            for (i=0,len=accept_mime.length;i<len;i++) {
+                if (accept_mime[i].test(file.type)) {
+                    return true;   
+                }
+            }
+            for (i=0,len=accept_ext.length;i<len;i++) {
+                if (accept_ext[i].test(file.name)) {
+                    return true;
+                }
+            }
+            
+        }else{
+            return true;
+        }
+    }
+    
     function readFile(file) {
         var fileInputObj  = this;
         if (file != undefined) {
@@ -68,16 +87,20 @@ var FileInput = (function () {
                 fileInputObj.data = event.target.result;
             }
             ;
-            switch (this.type) {
-                case FileInput.TYPE.ARRAYBUFFER: reader.readAsArrayBuffer(file);
-                break;
-                case FileInput.TYPE.DATAURL: reader.readAsDataURL(file);
-                break;
-                case FileInput.TYPE.TEXT: reader.readAsText(file);
-                break;
-                case FileInput.TYPE.FILE: fileInputObj.data = file;
-                break;
-                default: throw "Unknown type";
+            if (accepted(this.accept,file)) {
+                switch (this.type) {
+                    case FileInput.TYPE.ARRAYBUFFER: reader.readAsArrayBuffer(file);
+                    break;
+                    case FileInput.TYPE.DATAURL: reader.readAsDataURL(file);
+                    break;
+                    case FileInput.TYPE.TEXT: reader.readAsText(file);
+                    break;
+                    case FileInput.TYPE.FILE: fileInputObj.data = file;
+                    break;
+                    default: throw "Unknown type";
+                }
+            }else{
+                throw "File type didn't match the accept";
             }
         }
     }
