@@ -158,43 +158,10 @@ var FileInput = (function () {
         ;
     }
     ;
-    /*
-    FileInput.prototype.createPaste = function (element) {
-        var fileinput = this;
-        element.onpaste = function(event){
-          var clipboardData = (event.clipboardData || event.originalEvent.clipboardData);
-          
-          var data = null;
-          
-          if (clipboardData.files.length>0) {
-              data = clipboardData.files;
-          }else if (clipboardData.items.length>0) {
-              data = clipboardData.items;
-          }else{
-              console.log("bail paste");
-              return false;
-          }
-          console.log(data[0].getAsFile());
-          //console.log(clipboardData.files);
-          //console.log(clipboardData.items);
-          
-          console.log(data);
-          
-          return;
-          readFile.call(fileInputObj,file);
-          
-          //var blob = items[0].getAsFile();
-          //var reader = new FileReader();
-          //reader.onload = function (event) {
-    	  //	fileinput.data = event.target.result;
-    	  //	fileinput.onload();
-    	  //}
-          //reader.readAsArrayBuffer(blob);
-        }
-    }*/
-    
+
     FileInput.prototype.onload = function () {};
     FileInput.prototype.onerror = function () {};
+    
     FileInput.prototype.data = null;
     return FileInput;
 }
